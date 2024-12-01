@@ -26,6 +26,8 @@ def calculate_cost(rental_duration: int) -> int:
     cost = 10 + (rental_duration - 1) * 5
     return cost
 
+
+
 def save_rental(rental):
     '''
         Zapisuje dane wynajmu do pliku JSON.
@@ -37,16 +39,28 @@ def save_rental(rental):
     json.dump(rental, file)
     file.close()
 
-def load_rentals(): #TODO
+
+
+def load_rentals():
     '''
         Wczytuje wynajmy z pliku JSON.
     '''
+    file = open(RENTALS_PATH, "r")
+    rental = json.load(file)
+    print(f"loading rentals from json: {rental}")
 
-def cancel_rental(customer_name): #TODO
+
+
+def cancel_rental(customer_name):
     '''
         Usuwa wynajem.
     '''
+    load_rentals()
+    rental.pop(customer_name, None)
+    save_rental(rental)
     
+
+
 def send_rental_invoice_email(customer_email, rental_details): #TODO
     '''
         Wysyła e-mail z fakturą.
@@ -58,7 +72,9 @@ def sgenerate_daily_report(): #TODO
         Generuje raport dzienny.
     '''
 
-
+load_rentals()
 rent_bike("test", 10)
+
+cancel_rental("test")
 
 print(rental)
