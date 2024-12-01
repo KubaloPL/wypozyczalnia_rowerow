@@ -1,2 +1,2 @@
-# wypozyczalnia_rowerow test
+# wypozyczalnia_rowerow
 wypozyczalnia rowerow
