@@ -3,6 +3,7 @@ import json
 import datetime
 import smtplib
 import os
+from email.mime.text import MIMEText
 
 # CONFIGURABLE GLOBALS
 DATA_PATH = f"data"
@@ -67,13 +68,49 @@ def cancel_rental(customer_name):
     
 
 
-def send_rental_invoice_email(customer_email, rental_details): #TODO
+def send_rental_invoice_email(customer_email, customer_name):
     '''
         Wysyła e-mail z fakturą.
     '''
+    rental_details = rental[customer_name]
+    try:
+        # Configuration
+        port = 587
+        smtp_server = "127.0.0.1"
+        login = "server_login"
+        password = "server_password"
+
+        sender_email = "email@example.com"
+        receiver_email = customer_email
+
+        # Plain text content
+        text = f"""\
+        Faktura:
+        Osoba wynajmująca: {customer_name}
+        Czas wynajmu: {rental_details["rental_duration"]} godzin
+        Koszt wynajmu: {rental_details["cost"]}zł
+        Data wynajmu: {datetime.date.today()}
+        """
+        print(text)
+
+        # Create MIMEText object
+        message = MIMEText(text, "plain")
+        message["Subject"] = "Faktura za wynajem roweru"
+        message["From"] = sender_email
+        message["To"] = receiver_email
+
+        # Send the email
+        with smtplib.SMTP(smtp_server, port) as server:
+            server.starttls()
+            server.login(login, password)
+            server.sendmail(sender_email, receiver_email, message.as_string())
+
+    except Exception as error:
+        print(f"BŁĄD: Wysyłanie e-maila nie powiodło się: {error}")
 
 
-def generate_daily_report(): #TODO
+
+def generate_daily_report():
     '''
         Generuje raport dzienny.
     '''
@@ -82,12 +119,14 @@ def generate_daily_report(): #TODO
     json.dump(rental, file)
     file.close()
 
-# MAIN FUNCTION
 
+
+# MAIN FUNCTION
 
 load_rentals()
 rent_bike("test", 10)
 
 generate_daily_report()
 
+send_rental_invoice_email("hello@gmail.com","test")
 print(rental)
