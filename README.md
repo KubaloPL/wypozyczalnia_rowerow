@@ -3,14 +3,13 @@
 
 
 
-### Instalacja:
+## Instalacja:
+```
+ git clone https://github.com/KubaloPL/wypozyczalnia_rowerow
+ cd wypozyczalnia_rowerow
+```
 
- `git clone https://github.com/KubaloPL/wypozyczalnia_rowerow`
- <br>
- `cd wypozyczalnia_rowerow`
-
-
-### Opcje:
+## Opcje:
 - Opcja 1: Wyświetl wszystkie wynajmy
 - Opcja 2: Dodawanie wynajmu
 - Opcja 3: Anulowanie wynajmu
