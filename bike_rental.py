@@ -1,11 +1,17 @@
+# IMPORTS
 import json
 import datetime
 import smtplib
 import os
 
+# CONFIGURABLE GLOBALS
+DATA_PATH = f"data"
+RENTALS_PATH = f"{DATA_PATH}/rentals.json"
+
+# VARIABLES
 rental = {}
 
-RENTALS_PATH = "data/rentals.json"
+# FUNCTIONS
 
 def rent_bike(customer_name, rental_duration):
     '''
@@ -67,14 +73,21 @@ def send_rental_invoice_email(customer_email, rental_details): #TODO
     '''
 
 
-def sgenerate_daily_report(): #TODO
+def generate_daily_report(): #TODO
     '''
         Generuje raport dzienny.
     '''
+    path = f"data/daily_report_{datetime.date.today()}.json"
+    file = open(path, "w")
+    json.dump(rental, file)
+    file.close()
+
+# MAIN FUNCTION
+
 
 load_rentals()
 rent_bike("test", 10)
 
-cancel_rental("test")
+generate_daily_report()
 
 print(rental)
