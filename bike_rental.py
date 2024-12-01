@@ -20,7 +20,9 @@ def rent_bike(customer_name, rental_duration):
         Dodaje wynajem roweru
     '''
     cost = calculate_cost(rental_duration)
-    rental[customer_name] = {"rental_duration": rental_duration, "cost": cost}
+    now = datetime.datetime.now()
+    time = now.strftime("%d/%m/%Y %H:%M:%S")
+    rental[customer_name] = {"rental_duration": rental_duration, "cost": cost, "rental_time": time}
 
     save_rental(rental)
 
